@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -54,9 +54,13 @@ export function StudentForm({ student, onSubmit, onCancel }: StudentFormProps) {
     advisor: student?.advisor || "",
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleSubmit = (e: React.FormEvent) => {
+    setIsLoading(true);
     e.preventDefault();
     onSubmit(formData);
+    setIsLoading(false);
   };
 
   const handleChange = (field: string, value: string | number) => {
@@ -66,7 +70,9 @@ export function StudentForm({ student, onSubmit, onCancel }: StudentFormProps) {
   return (
     <Card className="w-full max-w-2xl mx-auto border border-neutral-500">
       <CardHeader>
-        <CardTitle>{student ? "Edit Student" : "Add New Student"}</CardTitle>
+        <CardTitle className="text-2xl font-bold">
+          {student ? "Edit Student" : "Add New Student"}
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -76,6 +82,7 @@ export function StudentForm({ student, onSubmit, onCancel }: StudentFormProps) {
               <Input
                 id="firstName"
                 value={formData.firstName}
+                placeholder="e.g., John"
                 onChange={(e) => handleChange("firstName", e.target.value)}
                 required
               />
@@ -84,6 +91,7 @@ export function StudentForm({ student, onSubmit, onCancel }: StudentFormProps) {
               <Label htmlFor="lastName">Last Name</Label>
               <Input
                 id="lastName"
+                placeholder="e.g., Doe"
                 value={formData.lastName}
                 onChange={(e) => handleChange("lastName", e.target.value)}
                 required
@@ -96,10 +104,14 @@ export function StudentForm({ student, onSubmit, onCancel }: StudentFormProps) {
             <Input
               id="email"
               type="email"
+              placeholder="e.g., gjC5o@example.com"
               value={formData.email}
               onChange={(e) => handleChange("email", e.target.value)}
               required
             />
+            <p className="text-sm text-muted-foreground">
+              *email must be unique.
+            </p>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
@@ -108,15 +120,20 @@ export function StudentForm({ student, onSubmit, onCancel }: StudentFormProps) {
               <Input
                 id="studentId"
                 value={formData.studentId}
+                placeholder="e.g., YDNB-1234"
                 onChange={(e) => handleChange("studentId", e.target.value)}
                 required
               />
+              <p className="text-sm text-muted-foreground p-0 m-0">
+                *student id must be unique.
+              </p>
             </div>
             <div className="space-y-2">
               <Label htmlFor="department">Department</Label>
               <Select
                 value={formData.department}
                 onValueChange={(value) => handleChange("department", value)}
+                required
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select department" />
@@ -167,10 +184,8 @@ export function StudentForm({ student, onSubmit, onCancel }: StudentFormProps) {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="ENROLLED">Enrolled</SelectItem>
+                  <SelectItem value="ENROLLED">Enrolled Graduate</SelectItem>
                   <SelectItem value="GRADUATED">Graduated</SelectItem>
-                  <SelectItem value="DROPPED">Dropped</SelectItem>
-                  <SelectItem value="ON_LEAVE">On Leave</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -184,6 +199,7 @@ export function StudentForm({ student, onSubmit, onCancel }: StudentFormProps) {
                 type="date"
                 value={formData.graduationDate}
                 onChange={(e) => handleChange("graduationDate", e.target.value)}
+                required
               />
             </div>
             <div className="space-y-2">
@@ -194,6 +210,7 @@ export function StudentForm({ student, onSubmit, onCancel }: StudentFormProps) {
                 step="0.01"
                 min="0"
                 max="4"
+                placeholder="e.g., 3.5"
                 value={formData.gpa || ""}
                 onChange={(e) =>
                   handleChange("gpa", Number.parseFloat(e.target.value))
@@ -225,6 +242,7 @@ export function StudentForm({ student, onSubmit, onCancel }: StudentFormProps) {
 
           <div className="flex gap-2 pt-4">
             <Button type="submit" className="flex-1">
+              {isLoading && <span>Loading...</span>}
               {student ? "Update Student" : "Add Student"}
             </Button>
             <Button

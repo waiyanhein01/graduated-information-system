@@ -42,7 +42,11 @@ export async function POST(
         gpa: data.gpa ? Number.parseFloat(data.gpa) : null,
       },
     });
-    return NextResponse.json(student, { status: 201 });
+    return NextResponse.json({
+      status: 201,
+      message: "Student created successfully",
+      student,
+    });
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to create student" },
@@ -73,7 +77,11 @@ export async function PUT(
       },
     });
 
-    return NextResponse.json(student);
+    return NextResponse.json({
+      status: 200,
+      message: "Student updated successfully",
+      student,
+    });
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to update student" },
