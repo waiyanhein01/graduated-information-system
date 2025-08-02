@@ -20,6 +20,7 @@ interface Student {
   enrollmentDate: string;
   graduationDate?: string;
   status: string;
+  gender?: string;
   gpa?: number;
   thesis?: string;
   advisor?: string;
@@ -51,6 +52,7 @@ export default function GraduateSystem() {
     try {
       const response = await fetch("/api/statistics");
       const data = await response.json();
+      console.log(data, "statistics");
       setStatistics(data);
     } catch (error) {
       toast.error("Failed to fetch statistics");
@@ -87,22 +89,6 @@ export default function GraduateSystem() {
   const handleEdit = (student: Student) => {
     setEditingStudent(student);
     setShowForm(true);
-  };
-
-  const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this student?")) return;
-
-    try {
-      const response = await fetch(`/api/students/${id}`, { method: "DELETE" });
-
-      if (response.ok) {
-        toast.success("Student deleted successfully");
-        fetchStudents();
-        fetchStatistics();
-      }
-    } catch (error) {
-      toast.error("Failed to delete student");
-    }
   };
 
   const handleCancel = () => {
@@ -155,11 +141,7 @@ export default function GraduateSystem() {
         </TabsList>
 
         <TabsContent value="students" className="mt-6">
-          <StudentList
-            students={students}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
-          />
+          <StudentList students={students} onEdit={handleEdit} />
         </TabsContent>
 
         <TabsContent value="statistics" className="mt-6">

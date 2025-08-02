@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -30,6 +30,7 @@ interface Student {
   gpa?: number;
   thesis?: string;
   advisor?: string;
+  gender?: string; // Add gender to the interface
 }
 
 interface StudentFormProps {
@@ -52,15 +53,12 @@ export function StudentForm({ student, onSubmit, onCancel }: StudentFormProps) {
     gpa: student?.gpa || undefined,
     thesis: student?.thesis || "",
     advisor: student?.advisor || "",
+    gender: student?.gender || "", // Initialize gender
   });
 
-  const [isLoading, setIsLoading] = useState(false);
-
   const handleSubmit = (e: React.FormEvent) => {
-    setIsLoading(true);
     e.preventDefault();
     onSubmit(formData);
-    setIsLoading(false);
   };
 
   const handleChange = (field: string, value: string | number) => {
@@ -68,11 +66,9 @@ export function StudentForm({ student, onSubmit, onCancel }: StudentFormProps) {
   };
 
   return (
-    <Card className="w-full max-w-2xl mx-auto border border-neutral-500">
+    <Card className="w-full max-w-2xl mx-auto">
       <CardHeader>
-        <CardTitle className="text-2xl font-bold">
-          {student ? "Edit Student" : "Add New Student"}
-        </CardTitle>
+        <CardTitle>{student ? "Edit Student" : "Add New Student"}</CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -82,7 +78,6 @@ export function StudentForm({ student, onSubmit, onCancel }: StudentFormProps) {
               <Input
                 id="firstName"
                 value={formData.firstName}
-                placeholder="e.g., John"
                 onChange={(e) => handleChange("firstName", e.target.value)}
                 required
               />
@@ -91,7 +86,6 @@ export function StudentForm({ student, onSubmit, onCancel }: StudentFormProps) {
               <Label htmlFor="lastName">Last Name</Label>
               <Input
                 id="lastName"
-                placeholder="e.g., Doe"
                 value={formData.lastName}
                 onChange={(e) => handleChange("lastName", e.target.value)}
                 required
@@ -104,14 +98,10 @@ export function StudentForm({ student, onSubmit, onCancel }: StudentFormProps) {
             <Input
               id="email"
               type="email"
-              placeholder="e.g., gjC5o@example.com"
               value={formData.email}
               onChange={(e) => handleChange("email", e.target.value)}
               required
             />
-            <p className="text-sm text-muted-foreground">
-              *email must be unique.
-            </p>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
@@ -120,20 +110,15 @@ export function StudentForm({ student, onSubmit, onCancel }: StudentFormProps) {
               <Input
                 id="studentId"
                 value={formData.studentId}
-                placeholder="e.g., YDNB-1234"
                 onChange={(e) => handleChange("studentId", e.target.value)}
                 required
               />
-              <p className="text-sm text-muted-foreground p-0 m-0">
-                *student id must be unique.
-              </p>
             </div>
             <div className="space-y-2">
               <Label htmlFor="department">Department</Label>
               <Select
                 value={formData.department}
                 onValueChange={(value) => handleChange("department", value)}
-                required
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select department" />
@@ -184,8 +169,10 @@ export function StudentForm({ student, onSubmit, onCancel }: StudentFormProps) {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="ENROLLED">Enrolled Graduate</SelectItem>
+                  <SelectItem value="ENROLLED">Enrolled</SelectItem>
                   <SelectItem value="GRADUATED">Graduated</SelectItem>
+                  <SelectItem value="DROPPED">Dropped</SelectItem>
+                  <SelectItem value="ON_LEAVE">On Leave</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -199,7 +186,6 @@ export function StudentForm({ student, onSubmit, onCancel }: StudentFormProps) {
                 type="date"
                 value={formData.graduationDate}
                 onChange={(e) => handleChange("graduationDate", e.target.value)}
-                required
               />
             </div>
             <div className="space-y-2">
@@ -210,13 +196,33 @@ export function StudentForm({ student, onSubmit, onCancel }: StudentFormProps) {
                 step="0.01"
                 min="0"
                 max="4"
-                placeholder="e.g., 3.5"
                 value={formData.gpa || ""}
                 onChange={(e) =>
                   handleChange("gpa", Number.parseFloat(e.target.value))
                 }
               />
             </div>
+          </div>
+
+          {/* New Gender Field */}
+          <div className="space-y-2">
+            <Label htmlFor="gender">Gender</Label>
+            <Select
+              value={formData.gender || ""}
+              onValueChange={(value) => handleChange("gender", value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select gender" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Male">Male</SelectItem>
+                <SelectItem value="Female">Female</SelectItem>
+                <SelectItem value="Other">Other</SelectItem>
+                <SelectItem value="Prefer not to say">
+                  Prefer not to say
+                </SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           <div className="space-y-2">
@@ -242,14 +248,13 @@ export function StudentForm({ student, onSubmit, onCancel }: StudentFormProps) {
 
           <div className="flex gap-2 pt-4">
             <Button type="submit" className="flex-1">
-              {isLoading && <span>Loading...</span>}
               {student ? "Update Student" : "Add Student"}
             </Button>
             <Button
               type="button"
               variant="outline"
               onClick={onCancel}
-              className="flex-1 bg-transparent border border-neutral-500"
+              className="flex-1 bg-transparent"
             >
               Cancel
             </Button>

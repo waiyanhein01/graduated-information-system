@@ -89,21 +89,3 @@ export async function PUT(
     );
   }
 }
-
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  try {
-    await prisma.student.delete({
-      where: { id: params.id },
-    });
-
-    return NextResponse.json({ message: "Student deleted successfully" });
-  } catch (error) {
-    return NextResponse.json(
-      { error: "Failed to delete student" },
-      { status: 500 }
-    );
-  }
-}

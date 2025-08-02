@@ -19,6 +19,23 @@ export async function GET() {
       },
     });
 
+    // Get graduation statistics by year and gender
+    const graduationByYearAndGender = await prisma.student.groupBy({
+      by: ["graduationYear", "gender"],
+      where: {
+        graduationYear: {
+          not: null,
+        },
+        gender: {
+          not: null,
+        },
+      },
+      _count: {
+        id: true,
+      },
+      orderBy: [{ graduationYear: "desc" }, { gender: "asc" }],
+    });
+
     // Get overall statistics
     const totalStudents = await prisma.student.count();
     const graduatedStudents = await prisma.student.count({
@@ -38,6 +55,7 @@ export async function GET() {
 
     return NextResponse.json({
       graduationByYear: graduationStats,
+      graduationByYearAndGender: graduationByYearAndGender, // New data
       overview: {
         total: totalStudents,
         graduated: graduatedStudents,

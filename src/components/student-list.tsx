@@ -12,7 +12,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Edit, Trash2, Search } from "lucide-react";
+import { Edit, Search } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -28,6 +28,7 @@ interface Student {
   email: string;
   studentId: string;
   program: string;
+  gender?: string;
   department: string;
   enrollmentDate: string;
   graduationDate?: string;
@@ -41,10 +42,9 @@ interface Student {
 interface StudentListProps {
   students: Student[];
   onEdit: (student: Student) => void;
-  onDelete: (id: string) => void;
 }
 
-export function StudentList({ students, onEdit, onDelete }: StudentListProps) {
+export function StudentList({ students, onEdit }: StudentListProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [yearFilter, setYearFilter] = useState("ALL");
 
@@ -113,6 +113,7 @@ export function StudentList({ students, onEdit, onDelete }: StudentListProps) {
                 <TableHead>Email</TableHead>
                 <TableHead>Department</TableHead>
                 <TableHead>Program</TableHead>
+                <TableHead>Gender</TableHead>
                 <TableHead>Graduation Year</TableHead>
                 <TableHead>GPA</TableHead>
                 <TableHead>Graduation Date</TableHead>
@@ -129,6 +130,7 @@ export function StudentList({ students, onEdit, onDelete }: StudentListProps) {
                   <TableCell>{student.email}</TableCell>
                   <TableCell>{student.department}</TableCell>
                   <TableCell>{student.program}</TableCell>
+                  <TableCell>{student.gender}</TableCell>
                   <TableCell>{student.graduationYear || "N/A"}</TableCell>
                   <TableCell>
                     {student.gpa ? student.gpa.toFixed(2) : "N/A"}
@@ -146,13 +148,6 @@ export function StudentList({ students, onEdit, onDelete }: StudentListProps) {
                         onClick={() => onEdit(student)}
                       >
                         <Edit className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="destructive"
-                        size="sm"
-                        onClick={() => onDelete(student.id)}
-                      >
-                        <Trash2 className="h-4 w-4" />
                       </Button>
                     </div>
                   </TableCell>

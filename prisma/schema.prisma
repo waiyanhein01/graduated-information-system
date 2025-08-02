@@ -29,6 +29,7 @@ model Student {
   gpa            Float?
   thesis         String?
   advisor        String?
+  gender         String? 
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
 

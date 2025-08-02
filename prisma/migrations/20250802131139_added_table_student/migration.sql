@@ -14,6 +14,7 @@ CREATE TABLE `students` (
     `gpa` DOUBLE NULL,
     `thesis` VARCHAR(191) NULL,
     `advisor` VARCHAR(191) NULL,
+    `gender` VARCHAR(191) NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
