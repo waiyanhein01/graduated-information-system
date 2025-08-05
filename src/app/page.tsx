@@ -113,10 +113,10 @@ export default function GraduateSystem() {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-3xl font-bold">
-            Graduate Student Information System
+            Graduated Students Information System
           </h1>
           <p className="text-muted-foreground">
-            Manage graduate students and track graduation statistics
+            Manage graduated students and track graduation statistics
           </p>
         </div>
         <Button

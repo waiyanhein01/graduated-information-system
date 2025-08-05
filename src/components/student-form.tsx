@@ -65,6 +65,32 @@ export function StudentForm({ student, onSubmit, onCancel }: StudentFormProps) {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
+  const majors = [
+    { name: "myanmar", value: "Myanmar" },
+    { name: "english", value: "English" },
+    { name: "geography", value: "Geography" },
+    { name: "history", value: "History" },
+    { name: "philosophy", value: "Philosophy" },
+    { name: "psychology", value: "Psychology" },
+    { name: "archeology", value: "Archeology" },
+    { name: "law", value: "Law" },
+    { name: "internationalRelation", value: "International Relation" },
+    {
+      name: "libraryAndInformationStudies",
+      value: "Library and Information Studies",
+    },
+    { name: "economic", value: "Economic" },
+    { name: "anthropology", value: "Anthropology" },
+    { name: "chemistryAndBiochemistry", value: "Chemistry and Biochemistry" },
+    { name: "physicsAndNuclearPhysics", value: "Physics and Nuclear Physics" },
+    { name: "mathematics", value: "Mathematics" },
+    { name: "zoology", value: "Zoology" },
+    { name: "botanyAndMicrobiology", value: "Botany and Microbiology" },
+    { name: "geology", value: "Geology" },
+    { name: "industrialChemistry", value: "Industrial Chemistry" },
+    { name: "computerScience", value: "Computer Science" },
+  ];
+
   return (
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader>
@@ -124,14 +150,11 @@ export function StudentForm({ student, onSubmit, onCancel }: StudentFormProps) {
                   <SelectValue placeholder="Select department" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Computer Science">
-                    Computer Science
-                  </SelectItem>
-                  <SelectItem value="Engineering">Engineering</SelectItem>
-                  <SelectItem value="Physics">Physics</SelectItem>
-                  <SelectItem value="Mathematics">Mathematics</SelectItem>
-                  <SelectItem value="Biology">Biology</SelectItem>
-                  <SelectItem value="Chemistry">Chemistry</SelectItem>
+                  {majors.map((major) => (
+                    <SelectItem key={major.name} value={major.value}>
+                      {major.value}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
@@ -171,8 +194,6 @@ export function StudentForm({ student, onSubmit, onCancel }: StudentFormProps) {
                 <SelectContent>
                   <SelectItem value="ENROLLED">Enrolled</SelectItem>
                   <SelectItem value="GRADUATED">Graduated</SelectItem>
-                  <SelectItem value="DROPPED">Dropped</SelectItem>
-                  <SelectItem value="ON_LEAVE">On Leave</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -217,10 +238,6 @@ export function StudentForm({ student, onSubmit, onCancel }: StudentFormProps) {
               <SelectContent>
                 <SelectItem value="Male">Male</SelectItem>
                 <SelectItem value="Female">Female</SelectItem>
-                <SelectItem value="Other">Other</SelectItem>
-                <SelectItem value="Prefer not to say">
-                  Prefer not to say
-                </SelectItem>
               </SelectContent>
             </Select>
           </div>

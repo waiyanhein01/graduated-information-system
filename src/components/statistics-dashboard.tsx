@@ -11,7 +11,7 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
-import { GraduationCap, Users, BookOpen, TrendingUp } from "lucide-react";
+import { GraduationCap, Users, BookOpen } from "lucide-react";
 
 interface StatisticsProps {
   data: {
@@ -70,19 +70,7 @@ export function StatisticsDashboard({ data }: StatisticsProps) {
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Total Students
-            </CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{data?.overview?.total}</div>
-          </CardContent>
-        </Card>
-
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Graduated</CardTitle>
@@ -108,19 +96,12 @@ export function StatisticsDashboard({ data }: StatisticsProps) {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              Graduation Rate
+              Total Students
             </CardTitle>
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
+            <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">
-              {data.overview.total > 0
-                ? Math.round(
-                    (data.overview.graduated / data.overview.total) * 100
-                  )
-                : 0}
-              %
-            </div>
+            <div className="text-2xl font-bold">{data?.overview?.total}</div>
           </CardContent>
         </Card>
       </div>
@@ -158,12 +139,6 @@ export function StatisticsDashboard({ data }: StatisticsProps) {
                 <Legend />
                 <Bar dataKey="Male" fill="#82ca9d" name="Male Graduates" />
                 <Bar dataKey="Female" fill="#ffc658" name="Female Graduates" />
-                <Bar dataKey="Other" fill="#ff7300" name="Other Graduates" />
-                <Bar
-                  dataKey="Prefer not to say"
-                  fill="#0088FE"
-                  name="Prefer not to say"
-                />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>

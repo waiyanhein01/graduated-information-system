@@ -12,7 +12,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Edit, Search } from "lucide-react";
+import { Edit, Mars, Search, Users, Venus } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -77,7 +77,53 @@ export function StudentList({ students, onEdit }: StudentListProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Students ({filteredStudents.length})</CardTitle>
+        <div className="flex items-center justify-between gap-4 mb-4">
+          <Card className="w-full">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 w-auto h-auto">
+              <CardTitle className="text-sm font-medium">Male</CardTitle>
+              <Mars className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">
+                {
+                  filteredStudents.filter(
+                    (student) => student.gender === "Male"
+                  ).length
+                }
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="w-full">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 w-auto h-auto">
+              <CardTitle className="text-sm font-medium">Female</CardTitle>
+              <Venus className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">
+                {
+                  filteredStudents.filter(
+                    (student) => student.gender === "Female"
+                  ).length
+                }
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="w-full">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 w-auto h-auto">
+              <CardTitle className="text-sm font-medium">
+                Total Students
+              </CardTitle>
+              <Users className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">
+                {filteredStudents.length}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
         <div className="flex gap-4">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
