@@ -117,7 +117,7 @@ export default function GraduateSystem() {
         </div>
 
         <Button onClick={() => setShowForm(true)}>
-          <Plus className="mr-2 h-4 w-4" />
+          <Plus className="h-4 w-4" />
           Add Student
         </Button>
       </div>

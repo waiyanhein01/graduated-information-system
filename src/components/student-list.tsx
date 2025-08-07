@@ -185,38 +185,46 @@ export function StudentList({ students, onEdit }: StudentListProps) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredStudents.map((student) => (
-                <TableRow key={student.id}>
-                  <TableCell className="font-medium">
-                    {student.studentId}
-                  </TableCell>
-                  <TableCell>{`${student.firstName} ${student.lastName}`}</TableCell>
-                  <TableCell>{student.email}</TableCell>
-                  <TableCell>{student.department}</TableCell>
-                  <TableCell>{student.program}</TableCell>
-                  <TableCell>{student.gender}</TableCell>
-                  <TableCell>{student.graduationYear || "N/A"}</TableCell>
-                  <TableCell>
-                    {student.gpa ? student.gpa.toFixed(2) : "N/A"}
-                  </TableCell>
-                  <TableCell>
-                    {student.graduationDate
-                      ? new Date(student.graduationDate).toLocaleDateString()
-                      : "N/A"}
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => onEdit(student)}
-                      >
-                        <Edit className="h-4 w-4" />
-                      </Button>
-                    </div>
+              {filteredStudents.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={10} className="h-24 text-center">
+                    No students results.
                   </TableCell>
                 </TableRow>
-              ))}
+              ) : (
+                filteredStudents.map((student) => (
+                  <TableRow key={student.id}>
+                    <TableCell className="font-medium">
+                      {student.studentId}
+                    </TableCell>
+                    <TableCell>{`${student.firstName} ${student.lastName}`}</TableCell>
+                    <TableCell>{student.email}</TableCell>
+                    <TableCell>{student.department}</TableCell>
+                    <TableCell>{student.program}</TableCell>
+                    <TableCell>{student.gender}</TableCell>
+                    <TableCell>{student.graduationYear || "N/A"}</TableCell>
+                    <TableCell>
+                      {student.gpa ? student.gpa.toFixed(2) : "N/A"}
+                    </TableCell>
+                    <TableCell>
+                      {student.graduationDate
+                        ? new Date(student.graduationDate).toLocaleDateString()
+                        : "N/A"}
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => onEdit(student)}
+                        >
+                          <Edit className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
         </div>
