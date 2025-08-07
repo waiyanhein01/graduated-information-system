@@ -22,23 +22,12 @@ model Student {
   studentId      String        @unique
   program        String
   department     String
-  enrollmentDate DateTime
   graduationDate DateTime?
   graduationYear Int?
-  status         StudentStatus @default(ENROLLED)
   gpa            Float?
-  thesis         String?
-  advisor        String?
   gender         String? 
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
 
   @@map("students")
-}
-
-enum StudentStatus {
-  ENROLLED
-  GRADUATED
-  DROPPED
-  ON_LEAVE
 }

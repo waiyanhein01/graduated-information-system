@@ -12,7 +12,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Edit, Mars, Search, Users, Venus } from "lucide-react";
+import { Edit, Mars, Printer, Search, Users, Venus } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -30,12 +30,8 @@ interface Student {
   program: string;
   gender?: string;
   department: string;
-  enrollmentDate: string;
   graduationDate?: string;
-  status: string;
   gpa?: number;
-  thesis?: string;
-  advisor?: string;
   graduationYear?: number;
 }
 
@@ -74,10 +70,17 @@ export function StudentList({ students, onEdit }: StudentListProps) {
     return matchesSearch && matchesYear;
   });
 
+  const handlePrint = () => {
+    // This will print the entire window, but browsers are smart enough
+    // to focus on the main content. For more control, you'd use a dedicated
+    // print library or more complex CSS media queries.
+    window.print();
+  };
+
   return (
-    <Card>
+    <Card className="printable-table-card w-full">
       <CardHeader>
-        <div className="flex items-center justify-between gap-4 mb-4">
+        <div className="flex items-center justify-between gap-4 mb-4 ">
           <Card className="w-full">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 w-auto h-auto">
               <CardTitle className="text-sm font-medium">Male</CardTitle>
@@ -124,7 +127,7 @@ export function StudentList({ students, onEdit }: StudentListProps) {
             </CardContent>
           </Card>
         </div>
-        <div className="flex gap-4">
+        <div className="flex gap-4 print:hidden">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
             <Input
@@ -147,9 +150,24 @@ export function StudentList({ students, onEdit }: StudentListProps) {
               ))}
             </SelectContent>
           </Select>
+          <Button
+            onClick={handlePrint}
+            variant="outline"
+            className="flex items-center gap-2 border border-slate-500 cursor-pointer"
+          >
+            <Printer className="h-4 w-4" />
+            Print
+          </Button>
         </div>
       </CardHeader>
       <CardContent>
+        <div className="items-center justify-between hidden print:flex mb-6">
+          <div>
+            <h1 className="text-3xl font-bold">
+              Graduated Students Information
+            </h1>
+          </div>
+        </div>
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>

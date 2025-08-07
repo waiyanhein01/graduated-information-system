@@ -13,7 +13,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface Student {
@@ -24,12 +23,8 @@ interface Student {
   studentId: string;
   program: string;
   department: string;
-  enrollmentDate: string;
   graduationDate?: string;
-  status: string;
   gpa?: number;
-  thesis?: string;
-  advisor?: string;
   gender?: string; // Add gender to the interface
 }
 
@@ -47,12 +42,8 @@ export function StudentForm({ student, onSubmit, onCancel }: StudentFormProps) {
     studentId: student?.studentId || "",
     program: student?.program || "",
     department: student?.department || "",
-    enrollmentDate: student?.enrollmentDate?.split("T")[0] || "",
     graduationDate: student?.graduationDate?.split("T")[0] || "",
-    status: student?.status || "ENROLLED",
     gpa: student?.gpa || undefined,
-    thesis: student?.thesis || "",
-    advisor: student?.advisor || "",
     gender: student?.gender || "", // Initialize gender
   });
 
@@ -173,34 +164,6 @@ export function StudentForm({ student, onSubmit, onCancel }: StudentFormProps) {
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="enrollmentDate">Enrollment Date</Label>
-              <Input
-                id="enrollmentDate"
-                type="date"
-                value={formData.enrollmentDate}
-                onChange={(e) => handleChange("enrollmentDate", e.target.value)}
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="status">Status</Label>
-              <Select
-                value={formData.status}
-                onValueChange={(value) => handleChange("status", value)}
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="ENROLLED">Enrolled</SelectItem>
-                  <SelectItem value="GRADUATED">Graduated</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
               <Label htmlFor="graduationDate">Graduation Date</Label>
               <Input
                 id="graduationDate"
@@ -240,27 +203,6 @@ export function StudentForm({ student, onSubmit, onCancel }: StudentFormProps) {
                 <SelectItem value="Female">Female</SelectItem>
               </SelectContent>
             </Select>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="advisor">Advisor</Label>
-            <Input
-              id="advisor"
-              value={formData.advisor}
-              onChange={(e) => handleChange("advisor", e.target.value)}
-              placeholder="e.g., Dr. Smith"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="thesis">Thesis Title</Label>
-            <Textarea
-              id="thesis"
-              value={formData.thesis}
-              onChange={(e) => handleChange("thesis", e.target.value)}
-              placeholder="Enter thesis title (if applicable)"
-              rows={3}
-            />
           </div>
 
           <div className="flex gap-2 pt-4">

@@ -38,12 +38,6 @@ export async function GET() {
 
     // Get overall statistics
     const totalStudents = await prisma.student.count();
-    const graduatedStudents = await prisma.student.count({
-      where: { status: "GRADUATED" },
-    });
-    const enrolledStudents = await prisma.student.count({
-      where: { status: "ENROLLED" },
-    });
 
     // Get department statistics
     const departmentStats = await prisma.student.groupBy({
@@ -58,8 +52,6 @@ export async function GET() {
       graduationByYearAndGender: graduationByYearAndGender, // New data
       overview: {
         total: totalStudents,
-        graduated: graduatedStudents,
-        enrolled: enrolledStudents,
       },
       byDepartment: departmentStats,
     });

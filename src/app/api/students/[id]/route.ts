@@ -16,10 +16,11 @@ export async function GET(
 
     return NextResponse.json(student);
   } catch (error) {
-    return NextResponse.json(
-      { error: "Failed to fetch student" },
-      { status: 500 }
-    );
+    return NextResponse.json({
+      status: 500,
+      error: NextResponse.error,
+      message: "Failed to fetch student",
+    });
   }
 }
 
@@ -32,7 +33,6 @@ export async function POST(
     const student = await prisma.student.create({
       data: {
         ...data,
-        enrollmentDate: new Date(data.enrollmentDate),
         graduationDate: data.graduationDate
           ? new Date(data.graduationDate)
           : null,
@@ -48,10 +48,11 @@ export async function POST(
       student,
     });
   } catch (error) {
-    return NextResponse.json(
-      { error: "Failed to create student" },
-      { status: 500 }
-    );
+    return NextResponse.json({
+      status: 500,
+      error: NextResponse.error,
+      message: "Failed to create student",
+    });
   }
 }
 
@@ -66,7 +67,6 @@ export async function PUT(
       where: { id: params.id },
       data: {
         ...data,
-        enrollmentDate: new Date(data.enrollmentDate),
         graduationDate: data.graduationDate
           ? new Date(data.graduationDate)
           : null,
@@ -83,9 +83,10 @@ export async function PUT(
       student,
     });
   } catch (error) {
-    return NextResponse.json(
-      { error: "Failed to update student" },
-      { status: 500 }
-    );
+    return NextResponse.json({
+      status: 500,
+      error: NextResponse.error,
+      message: "Failed to update student",
+    });
   }
 }

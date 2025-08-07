@@ -9,7 +9,7 @@ export async function GET() {
     return NextResponse.json(students);
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to fetch students" },
+      { error: NextResponse.error, message: "Failed to fetch students" },
       { status: 500 }
     );
   }
@@ -22,7 +22,6 @@ export async function POST(request: NextRequest) {
     const student = await prisma.student.create({
       data: {
         ...data,
-        enrollmentDate: new Date(data.enrollmentDate),
         graduationDate: data.graduationDate
           ? new Date(data.graduationDate)
           : null,
@@ -36,7 +35,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(student, { status: 201 });
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to create student" },
+      { error: NextResponse.error, message: "Failed to create student" },
       { status: 500 }
     );
   }

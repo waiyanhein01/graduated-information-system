@@ -16,14 +16,11 @@ interface Student {
   email: string;
   studentId: string;
   program: string;
-  department: string;
-  enrollmentDate: string;
-  graduationDate?: string;
-  status: string;
   gender?: string;
+  department: string;
+  graduationDate?: string;
   gpa?: number;
-  thesis?: string;
-  advisor?: string;
+  graduationYear?: number;
 }
 
 export default function GraduateSystem() {
@@ -52,7 +49,6 @@ export default function GraduateSystem() {
     try {
       const response = await fetch("/api/statistics");
       const data = await response.json();
-      console.log(data, "statistics");
       setStatistics(data);
     } catch (error) {
       toast.error("Failed to fetch statistics");
@@ -119,13 +115,6 @@ export default function GraduateSystem() {
             Manage graduated students and track graduation statistics
           </p>
         </div>
-        <Button
-          onClick={() => setShowForm(true)}
-          className="flex items-center gap-2"
-        >
-          <Plus className="h-4 w-4" />
-          Add Student
-        </Button>
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab}>

@@ -120,3 +120,49 @@
     @apply bg-background text-foreground;
   }
 }
+
+@media print {
+  /* Hide everything by default */
+  body * {
+    visibility: hidden;
+  }
+
+  /* Make the specific table container visible */
+  .printable-table-card .overflow-x-auto {
+    visibility: visible;
+    position: absolute; /* Position it at the top-left of the print page */
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: visible !important; /* Ensure no scrollbars */
+  }
+
+  /* Make the table and its contents visible */
+  .printable-table-card .overflow-x-auto table,
+  .printable-table-card .overflow-x-auto table *,
+  .printable-table-card .overflow-x-auto table th,
+  .printable-table-card .overflow-x-auto table td {
+    visibility: visible;
+  }
+
+  /* Ensure table headers and cells have proper spacing and visibility */
+  .printable-table-card .overflow-x-auto table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .printable-table-card .overflow-x-auto th,
+  .printable-table-card .overflow-x-auto td {
+    border: 1px solid #ddd; /* Add borders for clarity in print */
+    padding: 8px;
+    text-align: left;
+  }
+
+  /* Hide the "Actions" column in print if not needed */
+  .printable-table-card .overflow-x-auto th:last-child,
+  .printable-table-card .overflow-x-auto td:last-child {
+    display: none;
+  }
+}
