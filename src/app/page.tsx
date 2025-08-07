@@ -115,6 +115,11 @@ export default function GraduateSystem() {
             Manage graduated students and track graduation statistics
           </p>
         </div>
+
+        <Button onClick={() => setShowForm(true)}>
+          <Plus className="mr-2 h-4 w-4" />
+          Add Student
+        </Button>
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab}>
